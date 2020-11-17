@@ -7,12 +7,13 @@
 //
 
 import UIKit
-
+import AVFoundation
 class ViewController: UIViewController {
     
     
     @IBOutlet weak var EggLabel: UILabel!
     @IBOutlet weak var eggProgressBar: UIProgressView!
+    var player: AVAudioPlayer!
     let softTime = 5
     let mediumTime = 7
     let hardTime = 12
@@ -40,15 +41,17 @@ class ViewController: UIViewController {
             secondsRemaining -= 1
             eggProgressBar.progress = Float(secondsPassed) / Float(TotalTime)
             print(Float(secondsPassed)/Float(TotalTime))
-            print(TotalTime)
+            print(secondsRemaining)
         
             EggLabel.text = secondsRemaining.description
         
         }
-        else {
+    else  {
             timer.invalidate()
             EggLabel.text = "Your Egg is Done!"
-            
+            let url = Bundle.main.url(forResource: "alarm_sound", withExtension: "mp3")
+            player = try! AVAudioPlayer(contentsOf: url!)
+            player.play()
         }
             
     
